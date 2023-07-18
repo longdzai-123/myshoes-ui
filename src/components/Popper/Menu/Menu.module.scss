@@ -1,0 +1,38 @@
+.menu-list {
+    width: 164px;
+    cursor: pointer;
+}
+
+.menu-item {
+    flex-direction: row;
+    font-weight: 500;
+    color: rgba(58, 71, 84, 1);
+    background: rgba(255, 255, 255, 1);
+    padding: 10px;
+    padding-right: 15px;
+    padding-left: 15px;
+    user-select: none;
+
+    &.seperate {
+        border-top: 2px solid;
+        border-color: rgb(200, 200, 200);
+    }
+
+    &:hover {
+        background-color: rgb(233, 233, 233);
+    }
+}
+
+.icon {
+    color: rgba(58, 71, 84, 1);
+    margin-right: 3px;
+    font-size: 14px;
+    width: 24px;
+    display: inline-block;
+    text-align: center;
+}
+
+
+.title {
+    font-size: 13px;
+}

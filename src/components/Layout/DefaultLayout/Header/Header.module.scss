@@ -1,0 +1,95 @@
+.wrapper {
+    width: 100%;
+    height: 90px;
+    box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    background-color: rgba(10, 67, 127, 1);
+    user-select: none;
+    position: fixed;
+    top: 0;
+}
+
+.inner {
+    height: 100%;
+    width: 1300px;
+    background-color: rgba(10, 67, 127, 1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    height: 100%;
+    width: 130px;
+    display: flex;
+    align-items: center;
+
+}
+
+
+.action {
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+}
+
+.login {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    cursor: pointer;
+    user-select: none;
+
+}
+
+.txt {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 1);
+
+    span {
+        font-size: 10px;
+    }
+}
+
+.icon-user {
+    font-size: 28px;
+    color: rgba(255, 255, 255, 1);
+    margin-right: 5px;
+}
+
+.cart {
+    margin-left: 20px;
+
+
+}
+
+.icon-cart {
+    font-size: 32px;
+    color: rgba(255, 255, 255, 1);
+    left: 1px;
+    margin-top: 3px;
+    cursor: pointer;
+
+    &:hover {
+        color: rgb(230, 230, 230);
+    }
+}
+
+.avatar {
+    width: 32PX;
+    height: 32px;
+    margin-right: 8px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.login {
+    display: flex;
+    align-items: center;
+
+}
