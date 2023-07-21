@@ -1,19 +1,15 @@
 import { httpRequest } from "../utils/axios";
 
-export const searchProduct = (searchValue) => {
-    let data = JSON.stringify({
-
-        "keyword": searchValue
-    });
+export const searchProductByName = (searchValue) => {
 
     let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: '/product/search',
+        url: `/product/search-name?keyword=${searchValue}`,
         headers: {
             'Content-Type': 'application/json'
         },
-        data: data
+
     };
 
     return httpRequest.request(config)

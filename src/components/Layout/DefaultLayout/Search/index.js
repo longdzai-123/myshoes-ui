@@ -6,7 +6,7 @@ import styles from './Search.module.scss'
 import { useEffect, useState } from 'react';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { searchProduct } from '../../../../service/SearchService';
+import { searchProductByName } from '../../../../service/SearchService';
 
 const cx = classNames.bind(styles)
 function Search() {
@@ -15,8 +15,9 @@ function Search() {
 
     const fetchData = async () => {
         try {
-            let body = await searchProduct(searchValue)
+            let body = await searchProductByName(searchValue)
             console.log(body)
+            setSearchResult(body)
         } catch (e) {
             console.log(e)
         }
@@ -24,6 +25,7 @@ function Search() {
 
     useEffect(() => {
         if (!searchValue.trim()) {
+            setSearchResult([])
             return;
         }
         fetchData()
@@ -39,9 +41,9 @@ function Search() {
             render={(attrs) => (
                 <div className={cx('search-result')} tabIndex="-1"{...attrs}>
                     <PopperWrapper>
-                        <ProductItem />
-                        <ProductItem />
-                        <ProductItem />
+                        {searchResult.map((result) => (
+                            <ProductItem data={result} key={result.id} />
+                        ))}
                     </PopperWrapper>
                 </div>
             )}

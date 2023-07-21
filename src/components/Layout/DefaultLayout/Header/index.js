@@ -62,7 +62,7 @@ function Header() {
                         <div className={cx('login')}>
                             {auth ? (
                                 <>
-                                    <img className={cx('avatar')} src={require(`../../../../assets/image/user-b1612c6a-c6b0-4fef-aad6-49de94299403.jpg`)} alt="" />
+                                    {user.avatar && <img className={cx('avatar')} src={require(`../../../../assets/image/${user.avatar}`)} alt="avatar" />}
                                     <span className={cx('txt')}>
                                         {user.name}
                                         <span>Chỉnh sửa / Thoát</span>
