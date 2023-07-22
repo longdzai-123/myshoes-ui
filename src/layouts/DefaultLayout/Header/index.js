@@ -3,11 +3,12 @@ import styles from './Header.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBagShopping, faUserCheck, faUserLock, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { faUser, faAddressCard, faClipboard } from '@fortawesome/free-regular-svg-icons'
-import Menu from '../../../Popper/Menu';
+import Menu from '../../../components/Popper/Menu';
 import Search from '../Search';
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
-import { AuthContext } from '../../../../context/AuthContext';
+import { AuthContext } from '../../../context/AuthContext';
+import { useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles)
 
@@ -46,6 +47,8 @@ function Header() {
     let { auth, user } = useContext(AuthContext)
     console.log(auth)
 
+    const state = useSelector((state) => state.addCarts)
+
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -62,7 +65,7 @@ function Header() {
                         <div className={cx('login')}>
                             {auth ? (
                                 <>
-                                    {user.avatar && <img className={cx('avatar')} src={require(`../../../../assets/image/${user.avatar}`)} alt="avatar" />}
+                                    {user.avatar && <img className={cx('avatar')} src={require(`../../../assets/image/${user.avatar}`)} alt="avatar" />}
                                     <span className={cx('txt')}>
                                         {user.name}
                                         <span>Chỉnh sửa / Thoát</span>
@@ -82,12 +85,13 @@ function Header() {
                         </div>
                     </Menu>
 
-                    <div className={cx('cart')}>
-                        <FontAwesomeIcon className={cx('icon-cart')} icon={faBagShopping} />
-                    </div>
+                    <Link to={"/cart"} className={cx('cart')}>
+                        < FontAwesomeIcon className={cx('icon-cart')} icon={faBagShopping} />
+                        <span className={cx('qty')}>{state.length}</span>
+                    </Link>
                 </div>
             </div>
-        </header>
+        </header >
     );
 }
 

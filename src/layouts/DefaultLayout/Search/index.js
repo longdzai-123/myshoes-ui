@@ -1,17 +1,19 @@
 import classNames from 'classnames/bind';
 import Tippy from '@tippyjs/react/headless';
-import { Wrapper as PopperWrapper } from '../../../Popper';
-import ProductItem from '../../../ProductItem';
+import { Wrapper as PopperWrapper } from '../../../components/Popper';
+import ProductItem from '../../../components/ProductItem';
 import styles from './Search.module.scss'
 import { useEffect, useState } from 'react';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { searchProductByName } from '../../../../service/SearchService';
+import { searchProductByName } from '../../../service/SearchService';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles)
 function Search() {
     const [searchResult, setSearchResult] = useState([]);
-    const [searchValue, setSearchValue] = useState('')
+    const [searchValue, setSearchValue] = useState('');
+    const [showResult, setShowResult] = useState(false);
 
     const fetchData = async () => {
         try {
@@ -28,7 +30,9 @@ function Search() {
             setSearchResult([])
             return;
         }
+
         fetchData()
+
     }, [searchValue])
 
     const handleChange = (e) => {
@@ -37,19 +41,23 @@ function Search() {
     return (
         <Tippy
             interactive
-            visible={searchResult.length > 0}
+            visible={showResult && searchResult.length > 0}
             render={(attrs) => (
                 <div className={cx('search-result')} tabIndex="-1"{...attrs}>
-                    <PopperWrapper>
-                        {searchResult.map((result) => (
-                            <ProductItem data={result} key={result.id} />
-                        ))}
-                    </PopperWrapper>
+                    <div className={cx('product-result')}>
+                        <PopperWrapper>
+                            {searchResult.map((result) => (
+                                <Link to={`/product/${result.id}`}>
+                                    <ProductItem data={result} key={result.id} />
+                                </Link>
+                            ))}
+                        </PopperWrapper>
+                    </div>
                 </div>
             )}
         >
             <div className={cx('search')}>
-                <input value={searchValue} placeholder="Tìm kiếm sản phẩm..." onChange={handleChange} />
+                <input onFocus={() => setShowResult(true)} value={searchValue} placeholder="Tìm kiếm sản phẩm..." onChange={handleChange} />
 
                 <button className={cx('search-btn')}>
                     <FontAwesomeIcon icon={faMagnifyingGlass} />

@@ -63,9 +63,20 @@
 }
 
 .cart {
+    display: flex;
     margin-left: 20px;
+    padding: 10px;
+    position: relative;
 
-
+    .qty {
+        position: absolute;
+        top: 0px;
+        right: 0;
+        padding: 0px 6px;
+        background-color: red;
+        border-radius: 50%;
+        color: #fff;
+    }
 }
 
 .icon-cart {

@@ -10,7 +10,7 @@ function Footer() {
                     <h1>MYSHOES.VN - GIÀY CHÍNH HÃNG</h1>
                     <div className={cx('description')}>
                         <div className={cx('img')}>
-                            <img src={require('../../../../assets/image/logo-myshoes-ok-90x90.png')} alt="" />
+                            <img src={require('../../../assets/image/logo-myshoes-ok-90x90.png')} alt="" />
                         </div>
                         <div className={cx('txt')}>
                             <span>Myshoes.vn được định hướng trở thành hệ thống thương mại điện tử bán giày chính hãng hàng đầu Việt Nam.</span>
@@ -38,10 +38,10 @@ function Footer() {
                     <h1>Chứng nhận</h1>
                     <div className={cx('certify')}>
                         <div className={cx('dma')}>
-                            <img src={require('../../../../assets/image/DMCA_logo-grn-btn150w.png')} alt="" />
+                            <img src={require('../../../assets/image/DMCA_logo-grn-btn150w.png')} alt="" />
                         </div>
                         <div className={cx('bct')}>
-                            <img src={require('../../../../assets/image/logo-bct.png')} alt="" />
+                            <img src={require('../../../assets/image/logo-bct.png')} alt="" />
                         </div>
                     </div>
                 </div>

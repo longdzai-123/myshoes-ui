@@ -6,16 +6,20 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { useEffect, useState } from "react";
 import { ProductById } from "../../service/ProductService";
+import { addItem, delItem } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 const cx = classNames.bind(styles)
 function ProductDetails() {
     const [selectSize, setSelectSize] = useState("")
     const [product, setProduct] = useState({})
-
     const [category, setCategory] = useState({})
+    const dispatch = useDispatch()
     const handleSize = (e) => {
         setSelectSize(e.target.value)
     }
+
     let { id } = useParams()
+
     const fetchApi = async () => {
         try {
             let body = await ProductById(id)
@@ -24,13 +28,16 @@ function ProductDetails() {
         } catch (error) {
             console.log(error)
         }
-
-
     }
 
     useEffect(() => {
         fetchApi()
     }, [])
+
+    const handleAddCart = () => {
+        dispatch(addItem(product))
+    }
+
 
     return (
         <div className={cx('wrapper')} >
@@ -77,7 +84,7 @@ function ProductDetails() {
                                         </ToggleButtonGroup>
                                     </div>
                                     <div className={cx('btn-group')}>
-                                        <button className={cx('add-cart')}>Thêm vào giỏ hàng</button>
+                                        <button className={cx('add-cart')} onClick={handleAddCart}>Thêm vào giỏ hàng</button>
                                         <button className={cx('buy-now')}>Mua hàng ngay</button>
                                     </div>
 
