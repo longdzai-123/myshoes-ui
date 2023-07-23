@@ -1,14 +1,51 @@
 import classNames from 'classnames/bind';
 import styles from './Checkout.module.scss'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, delItem } from '../../redux/actions';
+import { addItem, delAll, delItem } from '../../redux/actions';
+import { useState } from 'react';
+import { BillAdd } from '../../service/BillService';
 
 const cx = classNames.bind(styles)
 function Checkout() {
     const state = useSelector((state) => state.addCarts)
     let total = 0
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const [name, setName] = useState("")
+    const [phone, setPhone] = useState("")
+    const [address, setAddress] = useState("")
+
+    let totalPrice = 0
+    let billItems = state.map((state) => {
+        totalPrice = totalPrice + state.price * state.qty
+        return {
+            "product": {
+                "id": state.id
+            },
+            "quantity": state.qty,
+            "price": state.price * state.qt
+        }
+    }
+    )
+
+
+    const fetchApi = async () => {
+        try {
+            await BillAdd(billItems, name, phone, address, totalPrice)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleOrder = () => {
+        fetchApi()
+        dispatch(delAll())
+        navigate("/")
+    }
+
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('breadcrumb')}>
@@ -29,7 +66,6 @@ function Checkout() {
                                     <td>Số lượng</td>
                                     <td>Đơn giá</td>
                                     <td>Tổng cộng</td>
-                                    <td></td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,14 +93,14 @@ function Checkout() {
                     </div>
                     <div className={cx('content-right')}>
                         <h2>Thông tin giao hàng</h2>
-                        <input placeholder='Họ tên'></input>
-                        <input placeholder='Số điện thoại'></input>
-                        <input placeholder='Địa chỉ nhận hàng'></input>
+                        <input placeholder='Họ tên' onChange={(e) => { setName(e.target.value) }}></input>
+                        <input placeholder='Số điện thoại' onChange={(e) => { setPhone(e.target.value) }}></input>
+                        <input placeholder='Địa chỉ nhận hàng' onChange={(e) => { setAddress(e.target.value) }}></input>
 
                         {total > 0 ?
                             <div className={cx('payment')}>
                                 <p>Thành tiền:{total.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</p>
-                                <button className={cx('btn-payment')}>Đặt hàng</button>
+                                <button className={cx('btn-payment')} onClick={handleOrder}>Đặt hàng</button>
                             </div>
                             :
                             <div className={cx('nullCart')}>

@@ -19,7 +19,7 @@ function Cart() {
         if (auth) {
             navigate("/checkout")
         } else {
-            alert('Vui lòng đăng nhập tài khoản trước khi đăng kí')
+            alert('Vui lòng đăng nhập tài khoản trước khi thanh toán')
             navigate("/login")
         }
     }

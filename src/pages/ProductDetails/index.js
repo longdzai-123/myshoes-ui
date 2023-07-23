@@ -110,8 +110,6 @@ function ProductDetails() {
                             <p>Sản phẩm đẹp, giá cả hợp lý, và form chuẩn. Quan trọng nhất là sản phẩm thực sự đẹp và đáp ứng được nhu cầu của mình.</p>
                         </div>
                         <div className={cx('cmt-right')}>
-                            <label>Họ tên</label>
-                            <input placeholder="Họ tên" />
                             <label>Bình luận</label>
                             <textarea placeholder="Đánh giá của bạn" />
                             <button className={cx('btn-cmt')}>Bình luận</button>

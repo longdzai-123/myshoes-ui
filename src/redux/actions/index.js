@@ -11,3 +11,8 @@ export const delItem = (product) => {
         payload: product
     }
 }
+export const delAll = () => {
+    return {
+        type: "DELALL",
+    }
+}

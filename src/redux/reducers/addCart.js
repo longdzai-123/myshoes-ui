@@ -24,6 +24,9 @@ const addCarts = (state = cart, action) => {
                 return state.map((x) => x.id === product.id ? { ...x, qty: x.qty - 1 } : x);
             }
             break;
+        case "DELALL":
+            return []
+            break;
         default: return state
             break;
     }
