@@ -57,7 +57,7 @@ function Login() {
                         <div className={cx('column-right')}>
                             <h2 className={cx('title')}>Thông tin đăng nhập</h2>
                             <div className={cx('form')}>
-                                <input placeholder="Tên đăng nhập:" onChange={(e) => { setUsername(e.target.value) }} />
+                                <input type="usernam" placeholder="Tên đăng nhập:" onChange={(e) => { setUsername(e.target.value) }} />
                                 <input type="password" placeholder="Mật khẩu:" onChange={(e) => { setPassword(e.target.value) }} />
                                 <Button to='/' className={cx('forget')}> Quên mật khẩu</Button>
                             </div>

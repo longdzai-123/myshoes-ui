@@ -3,9 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { publicRoutes } from './routes';
 import { DefaultLayout } from './layouts';
 import { AuthProvider } from './context/AuthContext';
+import { ToastContainer } from 'react-toastify';
 function App() {
   return (
     <AuthProvider>
+      <ToastContainer />
       <Router>
         <Routes>
           {publicRoutes.map((route, index) => {

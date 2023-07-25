@@ -10,6 +10,7 @@ import { addItem } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import { CommentAdd, CommentByProductId } from "../../service/CommentService";
 import { AuthContext } from "../../context/AuthContext";
+import { toast } from "react-toastify";
 const cx = classNames.bind(styles)
 function ProductDetails() {
     const [selectSize, setSelectSize] = useState("")
