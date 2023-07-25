@@ -4,21 +4,28 @@ import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProductById } from "../../service/ProductService";
-import { addItem, delItem } from "../../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "../../redux/actions";
+import { useDispatch } from "react-redux";
+import { CommentAdd, CommentByProductId } from "../../service/CommentService";
+import { AuthContext } from "../../context/AuthContext";
 const cx = classNames.bind(styles)
 function ProductDetails() {
     const [selectSize, setSelectSize] = useState("")
     const [product, setProduct] = useState({})
     const [category, setCategory] = useState({})
+    const [comments, setComments] = useState([])
+    const [content, setContent] = useState("")
+
     const dispatch = useDispatch()
     const handleSize = (e) => {
         setSelectSize(e.target.value)
     }
 
     let { id } = useParams()
+
+    const { auth, user } = useContext(AuthContext)
 
     const fetchApi = async () => {
         try {
@@ -29,15 +36,42 @@ function ProductDetails() {
             console.log(error)
         }
     }
+    const fetchApiComment = async () => {
+        try {
+            console.log(id)
+            let body = await CommentByProductId(id)
+
+            console.log(body)
+            setComments(body)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
+        fetchApiComment()
         fetchApi()
     }, [])
 
     const handleAddCart = () => {
         dispatch(addItem(product))
     }
+    const handleSubmitCmt = () => {
+        if (!auth) {
+            alert("Vui lòng đăng nhập trước khi đánh giá sản phẩm")
+            return;
+        }
+        const fetchApiCmtAdd = async () => {
+            try {
+                await CommentAdd(content, id, user.id)
+                fetchApiComment()
+            } catch (error) {
+                console.log(error)
+            }
+        }
 
+        fetchApiCmtAdd()
+    }
 
     return (
         <div className={cx('wrapper')} >
@@ -106,13 +140,29 @@ function ProductDetails() {
                     <div className={cx('product-cmt')}>
                         <div className={cx('cmt-left')}>
                             <h2>Xem đánh giá</h2>
-                            <label>Lê Hoàng Long</label>
-                            <p>Sản phẩm đẹp, giá cả hợp lý, và form chuẩn. Quan trọng nhất là sản phẩm thực sự đẹp và đáp ứng được nhu cầu của mình.</p>
+                            {!comments ?
+                                <>
+                                    <h3>Không có đánh giá nào</h3>
+                                </> :
+                                <>
+                                    {comments.map((comment) => {
+                                        return (
+                                            <div key={comment.id} className={cx('cmt-client')}>
+                                                <label>{comment.user.name}</label>
+                                                <span>{comment.cmtDate}</span>
+                                                <p>{comment.content}</p>
+                                            </div>
+                                        )
+                                    })
+                                    }
+                                </>
+                            }
+
                         </div>
                         <div className={cx('cmt-right')}>
                             <label>Bình luận</label>
-                            <textarea placeholder="Đánh giá của bạn" />
-                            <button className={cx('btn-cmt')}>Bình luận</button>
+                            <textarea placeholder="Đánh giá của bạn" onChange={(e) => { setContent(e.target.value) }} />
+                            <button className={cx('btn-cmt')} onClick={handleSubmitCmt}>Bình luận</button>
                         </div>
                     </div>
                 </div>
